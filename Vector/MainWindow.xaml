@@ -1,0 +1,242 @@
+﻿<Window x:Class="Vector.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Vector" 
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Login" Height="450" Width="300" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF273C51" Offset="0"/>
+            <GradientStop Color="#FF10171D" Offset="1"/>
+            <GradientStop Color="#FF1D2C3C" Offset="0.5"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Window.Resources>
+
+        <Style x:Key="TB" TargetType="TextBox">
+            <Setter Property="Background" Value="#16202b"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Foreground" Value="#e5e5e5"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="HelveticaneueCyr-Light"/>
+            <Setter Property="Padding" Value="10,0,0,0"/>
+            <Setter Property="BorderBrush" Value="#1e2a37"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid x:Name="root" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" SnapsToDevicePixels="True">
+                            <Border x:Name="Background" BorderThickness="1" CornerRadius="2" Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              BorderThickness="0"
+                                              Padding="{TemplateBinding Padding}"
+                                              IsTabStop="False"
+                                              Background="{x:Null}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#253343"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#2d3f53"/>
+                                <Setter Property="Background" Value="#131c25"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PB" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#16202b"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Foreground" Value="#e5e5e5"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontFamily" Value="HelveticaneueCyr-Light"/>
+            <Setter Property="Padding" Value="10,0,0,0"/>
+            <Setter Property="BorderBrush" Value="#1e2a37"/>
+            <EventSetter Event="PasswordChanged" Handler="OnPasswordChanged"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Grid x:Name="root" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" SnapsToDevicePixels="True">
+                            <Border x:Name="Background" BorderThickness="1" CornerRadius="2" Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              BorderThickness="0"
+                                              Padding="{TemplateBinding Padding}"
+                                              IsTabStop="False"
+                                              Background="{x:Null}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#253343"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#2d3f53"/>
+                                <Setter Property="Background" Value="#131c25"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="125"/>
+        </Grid.RowDefinitions>
+
+        <Grid Name="ToolBar" Grid.Row="0" MouseDown="ToolBar_MouseDown" Background="Transparent">
+            <Rectangle Fill="black" Opacity="0.9"/>
+            <TextBlock Text="Vector - Login" Foreground="White" FontSize="13" FontFamily="HelveticaNeueCyr-Light" HorizontalAlignment="center" Opacity="0.7" Margin="5"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Image x:Name="MinButton" Height="18" Width="18" Margin="4" Opacity="0.5" MouseDown="MinButton_MouseDown">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Setter Property="Source" Value="Source/hb_idle.png"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=MinButton}"
+                                         Value="True">
+                                    <Setter Property="Source" Value="Source/hb_hover.png"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+                <Image x:Name="CloseButton" Height="18" Width="18" Margin="4" Opacity="0.5" MouseDown="CloseButton_MouseDown">
+                    <Image.Style>
+                        <Style TargetType="{x:Type Image}">
+                            <Setter Property="Source" Value="Source/cb_idle.png"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=CloseButton}"
+                                         Value="True">
+                                    <Setter Property="Source" Value="Source/cb_hover.png"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Image.Style>
+                </Image>
+
+            </StackPanel>
+        </Grid>
+        <Grid Name="LogoContainer" Grid.Row="1">
+            <Image Name="Logov2" Source="Source/logo_v2_v.png" Margin="113,30,113,7" Opacity="0.8"/>
+
+        </Grid>
+
+        <TextBox x:Name="textBoxLogin" Grid.Row="2" Style="{StaticResource TB}" 
+                 Margin="30,58,30,116" Height="Auto" FontFamily="HelveticaneueCyr-Light"
+                 IsMouseCapturedChanged="TextBoxLogin_IsMouseCapturedChanged" Foreground="#f5f5f5"/>
+        <TextBlock x:Name="WatermarkLogin" IsHitTestVisible="False" FontSize="13" Text="Email or username" FontFamily="HelveticaneueCyr-Light"
+                   Grid.Row="2" Margin="43,63,100,0" VerticalAlignment="Top" Foreground="Gray" Height="15">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=textBoxLogin}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Label x:Name="textErrorState" Grid.Row="2" 
+               Content="Error" Margin="65,168,65,8" Foreground="Transparent" 
+               HorizontalContentAlignment="Center"
+               FontFamily="HelveticaneueCyr-Light"
+               Opacity="0.6"/>
+
+        <PasswordBox x:Name="textBoxPass" Grid.Row="2" Style="{StaticResource PB}"
+                 Margin="30,102,30,72" Height="Auto" IsMouseCapturedChanged="TextBoxPass_IsMouseCapturedChanged" 
+                 FontFamily="HelveticaneueCyr-Light" Foreground="#f5f5f5"/>
+        <TextBlock x:Name="WatermarkPass" IsHitTestVisible="False" FontSize="13" Text="Password" FontFamily="HelveticaneueCyr-Light"
+                   Grid.Row="2" Margin="43,107,100,0" VerticalAlignment="Top" Foreground="Gray" Height="16">
+        </TextBlock>
+
+        <CheckBox Grid.Row="2" Margin="31,143,136,37" 
+                  Background="#375470" Foreground="#e5e5e5" 
+                  Opacity="0.8"
+                  Style="{StaticResource MaterialDesignUserForegroundCheckBox}" Height="20"/>
+        <TextBlock Grid.Row="2" Text="Keep me logged in" Foreground="#e5e5e5" 
+                   FontSize="12" Margin="52,147,142,39" 
+                   Opacity="0.7" FontFamily="HelveticaneueCyr-Light"/>
+        <Button x:Name="ButtonLogin" Grid.Row="3" Width="100" Height="30" Margin="100,2,100,93"
+            Content="Sign in" Background="#2c4257" Foreground="#e5e5e5"
+            FontFamily="HelveticaNeueCyr Light" BorderBrush="#FF273C51"
+            Opacity="0.9" Style="{StaticResource MaterialDesignFlatMidBgButton}" Click="ButtonLogin_Click"/>
+        <TextBlock Grid.Row="3" Foreground="#e5e5e5" FontSize="11" Text="Or use the options below" Margin="91,37,90,74" 
+                   Opacity="0.7" RenderTransformOrigin="0.55,1.85"
+                   FontFamily="HelveticaNeueCyr Light"/>
+
+        <TextBlock x:Name="OpenRegisterWindow" Grid.Row="3" Height="Auto" Margin="83,56,83,53"
+            Text="Create a Vector account" FontSize="12" Foreground="#375470" Background="Transparent"
+            FontFamily="HelveticaNeueCyr" FontWeight="Medium"
+            MouseLeftButtonUp="OpenRegisterWindow_MouseLeftButtonUp">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="#375470"/>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Foreground.Color" To="Gray" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Foreground.Color" To="#375470" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <TextBlock Grid.Row="3" Height="Auto" Margin="115,77,115,32"
+            Text="Can`t log in?" FontSize="12" Foreground="#375470" Background="Transparent"
+            FontFamily="HelveticaNeueCyr" FontWeight="Medium">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="#375470"/>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Foreground.Color" To="Gray" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Foreground.Color" To="#375470" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Image x:Name="Logo" Source="Source/MainLogo.png" Margin="104,0,104,171" Grid.Row="2" Opacity="0.8"/>
+    </Grid>
+</Window>

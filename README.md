@@ -1,7 +1,7 @@
 # VectorSoftware
 
-(Это мой "первый" WPF проект на языке программирования C#)
-(This is my ~first WPF project on C# programming language)
+(Это мой первый WPF проект на языке программирования C#)
+(This is my first WPF project on C# programming language)
 
 Для начала это задумывалось как лоадер чита, потом как лаунчер для какой-нибудь игры. В последствии нигде не пригодилось. Вдохновлено лаунчером Blizzard.
 
